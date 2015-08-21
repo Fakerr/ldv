@@ -1,0 +1,41 @@
+<section data-ng-controller="HomeController">
+	<div class="jumbotron text-center">
+		<div class="panel panel-default no-padding-bottom no-padding-top">
+                <div class="panel-body panel-modified no-padding-bottom">
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="video in videos">
+                            <div class="embed-responsive embed-responsive-16by9 video-wrapper">
+                                <img class="imgW" src="/modules/core/img/bg/bg.png"
+                                     ng-click="openVideo(video)"/>
+                                <youtube-video video-url="video" class="embed-responsive-item-preview"
+                                               player-vars="playerVars"></youtube-video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	<div class="well">
+		<h2>MEAN.JS Documentation</h2>
+		<p>
+			Once you're familiar with the foundation technology, check out the MEAN.JS Documentation:
+			<ul>
+				<li><a target="_blank" href="http://meanjs.org/docs.html">MEAN.JS Documentation</a>
+				</li>
+				<li><a target="_blank" href="http://meanjs.org/generator.html">Yeoman Generator</a>
+				</li>
+				<li><a target="_blank" href="http://meanjs.org/modules.html">Modules</a>
+				</li>
+				<li><a target="_blank" href="http://meanjs.org/changelog.html">Changelog</a>
+				</li>
+				<li><a target="_blank" href="http://meanjs.org/community.html">Community</a>
+				</li>
+				<li><a target="_blank" href="http://blog.meanjs.org">Blog</a>
+				</li>
+			</ul>
+		</p>
+	</div>
+    </div>
+	<br>Enjoy &amp; Keep Us Updated,
+	<br>The MEAN.JS Team.
+</section>
