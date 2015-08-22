@@ -4,7 +4,8 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'ldv';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate',  'ui.router', 'ui.bootstrap', 'ui.utils', 'youtube-embed'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate',  'ui.router',
+	 'ui.bootstrap', 'ui.utils', 'youtube-embed', 'ngDialog'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
