@@ -1,16 +1,15 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'ngDialog',
-	function($scope, Authentication, ngDialog) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'ngDialog', 'Videos',
+	function($scope, Authentication, ngDialog, Videos) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-		$scope.videos = [
-		'https://www.youtube.com/watch?v=devqz4rXfgk', 
-		'https://www.youtube.com/watch?v=F2y8ga7E6kk', 
-		'https://www.youtube.com/watch?v=e2JZgko4DuE',
-		'https://www.youtube.com/watch?v=KviP9rfp2S4'
-		];
+
+		$scope.find = function() {
+			$scope.videos = Videos.query();
+		};
+
 		$scope.openVideo = function(video) {
 			$scope.videoUrl = video;
 			ngDialog.open({
