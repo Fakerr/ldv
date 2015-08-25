@@ -73,3 +73,10 @@
     padding-top: -15px;
     margin-top: -15px;
 }
+.navbar-brand {
+    color: #FFF !important;
+}
+.navbar-brand .lol{
+    color: #B00000   !important;
+    font-size: 30px !important;
+}

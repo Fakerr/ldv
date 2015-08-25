@@ -6,6 +6,7 @@
 
 exports.list = function(req, res) {
 	var videos = [
+	  'https://www.youtube.com/watch?v=NS0NUiCeOH0&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=fCQGV4qgqIU',
 	  'https://www.youtube.com/watch?v=yBbLBckgTDg&list',
 	  'https://www.youtube.com/watch?v=f7XT2nfkDQI&feature=youtu.be',
