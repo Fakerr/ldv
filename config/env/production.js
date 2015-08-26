@@ -7,8 +7,8 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.min.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
-				'public/lib/ngDialog/css/ngDialog-theme-default.min.css',
-				'public/lib/ngDialog/css/ngDialog.min.css'
+				'public/lib/ngDialog/css/ngDialog-theme-default.css',
+				'public/lib/ngDialog/css/ngDialog.css'
 			],
 			js: [
 				'public/lib/angular/angular.min.js',
