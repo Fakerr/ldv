@@ -1,8 +1,11 @@
 'use strict';
 
 /**
- * List of Videos
+ * Module dependencies.
  */
+var mongoose = require('mongoose'),
+    errorHandler = require('./errors.server.controller'),
+	Video = mongoose.model('Video');
 
 exports.list = function(req, res) {
 	var videos = [
@@ -13,10 +16,42 @@ exports.list = function(req, res) {
 	  'https://www.youtube.com/watch?v=f7XT2nfkDQI&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=l2T9ZhxOIuA',
 	  'https://www.youtube.com/watch?v=TAaWI0x9LFk',
-	  'https://www.youtube.com/watch?v=KviP9rfp2S4',
-	  'https://www.youtube.com/watch?v=devqz4rXfgk', 
-	  'https://www.youtube.com/watch?v=F2y8ga7E6kk', 
-	  'https://www.youtube.com/watch?v=e2JZgko4DuE'
+	  'https://www.youtube.com/watch?v=KviP9rfp2S4'
 	];
 	res.json(videos);
 };
+
+/**
+ * List of Videos
+ */
+ /*
+exports.list = function(req, res) {
+	Video.find().sort('-created').exec(function(err, videos) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(videos);
+		}
+	});
+};*/
+
+/**
+ * Create a video
+ */
+/*
+var create = function() {
+    var video1 = {url: 'https://www.youtube.com/watch?v=1Hf1XkNqUGM', description: 'Zed Play vs froggen'};
+	var video = new Video(video1);
+
+	video.save(function(err) {
+		if (err) {
+			console.log('video not added');
+		} else {
+			console.log('video added');
+		}
+	});
+};
+*/
+//create();

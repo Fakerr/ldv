@@ -2,8 +2,8 @@
 
 module.exports = {
 	app: {
-		title: 'ldv',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
+		title: 'League of legends daily videos',
+		description: 'League of legends daily videos',
 		keywords: 'MongoDB, Express, AngularJS, Node.js'
 	},
 	port: process.env.PORT || 3000,

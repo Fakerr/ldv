@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Video Schema
  */
-var VideosSchema = new Schema({
+var VideoSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
@@ -18,17 +18,12 @@ var VideosSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true,
-		required: 'Title cannot be blank'
+		required: 'url cannot be blank'
 	},
-	content: {
+	description: {
 		type: String,
-		default: '',
-		trim: true
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
+		default: 'No descritpion',
 	}
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Video', VideoSchema);
