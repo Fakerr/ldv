@@ -139,16 +139,16 @@
 
     .brand-text {
         font-family: 'Helvetica Neue', sans-serif;
-        font-size: 3rem;
-        font-weight: 700;
+        font-size: 3.2rem;
+        font-weight: 600;
         color: #B00000;
 
     }
 
-    sub {
+    .sub-text {
         color: white;
         font-weight: 100;
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 }
 
@@ -277,9 +277,9 @@
 }
 
 .container-bg {
-    background-color: #e5e5e5;
+    background-color: #FFFFFF;
 }
 
 .panel-transparent {
-    background-color: #e5e5e5;
+    background-color: #FFFFFF;
 }
