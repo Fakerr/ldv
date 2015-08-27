@@ -203,11 +203,8 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, ngDialog, Videos) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-
-		$scope.find = function() {
-			$scope.videos = Videos.query();
-		};
-
+		$scope.videos = Videos.query();
+	
 		$scope.openVideo = function(video) {
 			$scope.videoUrl = video;
 			ngDialog.open({
