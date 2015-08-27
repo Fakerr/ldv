@@ -6,7 +6,7 @@
                         <div class="col-md-4" ng-repeat="video in videos">
                             <div class="embed-responsive embed-responsive-16by9 video-wrapper">
                                 <img class="imgW" src="/modules/core/img/bg/bg.png"
-                                     ng-click="openVideo(video)"/>
+                                     ng-click="openVideo(video.url)"/>
                                 <youtube-video video-url="video.url" class="embed-responsive-item-preview"
                                                player-vars="playerVars"></youtube-video>
                             </div>
@@ -18,7 +18,7 @@
 	<div class="well">
 		<h2>About</h2>
 		<p>
-			Lol daily video is a site that share some video related to league of legend world .<br>
+			Lol daily videos is a site that share some video related to league of legend world .<br>
             If you want send us your league of legend video , please sign up. 
 		</p>
 	</div>
