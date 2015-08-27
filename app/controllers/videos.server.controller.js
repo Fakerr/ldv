@@ -6,9 +6,10 @@
 var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
 	Video = mongoose.model('Video');
-
+/*
 exports.list = function(req, res) {
 	var videos = [
+	  'https://www.youtube.com/watch?v=OvBsCpL53rw&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=1Hf1XkNqUGM',
 	  'https://www.youtube.com/watch?v=NS0NUiCeOH0&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=fCQGV4qgqIU',
@@ -19,12 +20,11 @@ exports.list = function(req, res) {
 	  'https://www.youtube.com/watch?v=KviP9rfp2S4'
 	];
 	res.json(videos);
-};
+};*/
 
 /**
  * List of Videos
  */
- /*
 exports.list = function(req, res) {
 	Video.find().sort('-created').exec(function(err, videos) {
 		if (err) {
@@ -35,7 +35,7 @@ exports.list = function(req, res) {
 			res.json(videos);
 		}
 	});
-};*/
+};
 
 /**
  * Create a video
