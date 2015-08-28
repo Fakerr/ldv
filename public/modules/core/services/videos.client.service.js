@@ -1,6 +1,6 @@
 'use strict';
 
-//Articles service used for communicating with the articles REST endpoints
+//Videos service used for communicating with the videos REST endpoints
 angular.module('core').factory('Videos', ['$resource',
 	function($resource) {
 		return $resource('videos/:videoId', {

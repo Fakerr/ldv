@@ -9,6 +9,8 @@ var mongoose = require('mongoose'),
 /*
 exports.list = function(req, res) {
 	var videos = [
+	  'https://www.youtube.com/watch?v=F1IjVQmCEd4',
+	  'https://www.youtube.com/watch?v=Xbile-gFS0A&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=OvBsCpL53rw&feature=youtu.be',
 	  'https://www.youtube.com/watch?v=1Hf1XkNqUGM',
 	  'https://www.youtube.com/watch?v=NS0NUiCeOH0&feature=youtu.be',
