@@ -4,43 +4,12 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    errorHandler = require('./errors.server.controller'),
-	Video = mongoose.model('Video');
-/*
-exports.list = function(req, res) {
-	var videos = [
-	  'https://www.youtube.com/watch?v=F1IjVQmCEd4',
-	  'https://www.youtube.com/watch?v=Xbile-gFS0A&feature=youtu.be',
-	  'https://www.youtube.com/watch?v=OvBsCpL53rw&feature=youtu.be',
-	  'https://www.youtube.com/watch?v=1Hf1XkNqUGM',
-	  'https://www.youtube.com/watch?v=NS0NUiCeOH0&feature=youtu.be',
-	  'https://www.youtube.com/watch?v=fCQGV4qgqIU',
-	  'https://www.youtube.com/watch?v=yBbLBckgTDg&list',
-	  'https://www.youtube.com/watch?v=f7XT2nfkDQI&feature=youtu.be',
-	  'https://www.youtube.com/watch?v=l2T9ZhxOIuA',
-	  'https://www.youtube.com/watch?v=TAaWI0x9LFk',
-	  'https://www.youtube.com/watch?v=KviP9rfp2S4'
-	];
-	res.json(videos);
-};*/
+	errorHandler = require('./errors.server.controller'),
+	Video = mongoose.model('Video'),
+	_ = require('lodash');
 
 /**
- * List of Videos
- */
-exports.list = function(req, res) {
-	Video.find().sort('-created').exec(function(err, videos) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(videos);
-		}
-	});
-};
-
-/**
- * Create a video
+ * Create a Video
  */
 exports.create = function(req, res) {
 	var video = new Video(req.body);
@@ -52,7 +21,87 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(video);
+			res.jsonp(video);
 		}
 	});
+};
+
+/**
+ * Show the current Video
+ */
+exports.read = function(req, res) {
+	res.jsonp(req.video);
+};
+
+/**
+ * Update a Video
+ */
+exports.update = function(req, res) {
+	var video = req.video ;
+
+	video = _.extend(video , req.body);
+
+	video.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(video);
+		}
+	});
+};
+
+/**
+ * Delete an Video
+ */
+exports.delete = function(req, res) {
+	var video = req.video ;
+
+	video.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(video);
+		}
+	});
+};
+
+/**
+ * List of Videos
+ */
+exports.list = function(req, res) { 
+	Video.find().sort('-created').populate('user', 'displayName').exec(function(err, videos) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(videos);
+		}
+	});
+};
+
+/**
+ * Video middleware
+ */
+exports.videoByID = function(req, res, next, id) { 
+	Video.findById(id).populate('user', 'displayName').exec(function(err, video) {
+		if (err) return next(err);
+		if (! video) return next(new Error('Failed to load Video ' + id));
+		req.video = video ;
+		next();
+	});
+};
+
+/**
+ * Video authorization middleware
+ */
+exports.hasAuthorization = function(req, res, next) {
+	if (req.video.user.id !== req.user.id) {
+		return res.status(403).send('User is not authorized');
+	}
+	next();
 };
