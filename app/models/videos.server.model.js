@@ -23,6 +23,10 @@ var VideoSchema = new Schema({
 	description: {
 		type: String,
 		default: 'No descritpion',
+	},
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
 	}
 });
 

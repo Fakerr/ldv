@@ -1,11 +1,17 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'ngDialog', 'Videos',
-	function($scope, Authentication, ngDialog, Videos) {
+angular.module('core').controller('HomeController', ['$scope', '$http', 'Authentication', 'ngDialog',
+	function($scope, $http, Authentication, ngDialog) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-		$scope.videos = Videos.query();
+        //Get videos using videos API.
+        $http.get('/videos').success(function(response) {
+				// If successful we assign the response to the global video model
+				$scope.videos = response;
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
 	
 		$scope.openVideo = function(video) {
 			$scope.videoUrl = video;

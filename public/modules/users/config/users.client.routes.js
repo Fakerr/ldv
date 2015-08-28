@@ -5,6 +5,10 @@ angular.module('users').config(['$stateProvider',
 	function($stateProvider) {
 		// Users state routing
 		$stateProvider.
+		state('admins', {
+			url: '/admins',
+			templateUrl: 'modules/users/views/admins.client.view.html'
+		}).
 		state('profile', {
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
@@ -40,10 +44,6 @@ angular.module('users').config(['$stateProvider',
 		state('reset', {
 			url: '/password/reset/:token',
 			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
-		}).
-		state('admin', {
-			url: '/admins',
-			templateUrl: 'modules/users/views/administration/admin.client.view.html'
 		});
 	}
 ]);

@@ -42,18 +42,17 @@ exports.list = function(req, res) {
 /**
  * Create a video
  */
-/*
-var create = function() {
-    var video1 = {url: 'https://www.youtube.com/watch?v=1Hf1XkNqUGM', description: 'Zed Play vs froggen'};
-	var video = new Video(video1);
+exports.create = function(req, res) {
+	var video = new Video(req.body);
+	video.user = req.user;
 
 	video.save(function(err) {
 		if (err) {
-			console.log('video not added');
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
 		} else {
-			console.log('video added');
+			res.json(video);
 		}
 	});
 };
-*/
-//create();
