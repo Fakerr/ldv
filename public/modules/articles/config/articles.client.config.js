@@ -6,6 +6,6 @@ angular.module('articles').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('top-admin', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
 		Menus.addSubMenuItem('top-admin', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('top-admin', 'articles', 'New Article', 'articles/create');
+		Menus.addMenuItem('topbar', 'Send video', 'send', '/send');
 	}
 ]);

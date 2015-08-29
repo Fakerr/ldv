@@ -1,8 +1,12 @@
 <section data-ng-controller="ArticlesController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="article.title"></h1>
+		<h3 data-ng-bind="article.title"></h3>
+		<a target="_blank" data-ng-bind="article.title" data-ng-href="{{article.title}}"></a>
 	</div>
 	<div class="pull-right">
+		<a class="btn btn-primary" data-ng-click="add();">
+			<i class="glyphicon glyphicon-ok"></i>
+		</a>
 		<a class="btn btn-primary" href="/#!/articles/{{article._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

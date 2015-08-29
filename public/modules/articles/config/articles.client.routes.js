@@ -5,6 +5,10 @@ angular.module('articles').config(['$stateProvider',
 	function($stateProvider) {
 		// Articles state routing
 		$stateProvider.
+		state('send-video', {
+			url: '/send',
+			templateUrl: 'modules/articles/views/send.client.view.html'
+		}).
 		state('listArticles', {
 			url: '/articles',
 			templateUrl: 'modules/articles/views/list-articles.client.view.html'

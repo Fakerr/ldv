@@ -17,7 +17,7 @@ angular.module('videos').controller('VideosController', ['$scope', '$stateParams
 			// Create new Video object
 			var video = new Videos ({
 				url: this.url,
-				description: this.descirption
+				description: this.description
 			});
 
 			// Redirect after save

@@ -1,6 +1,7 @@
 <section data-ng-controller="VideosController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h3 data-ng-bind="video.url"></h3>
+		<a target="_blank" data-ng-bind="video.url" data-ng-href="{{video.url}}"></a>
 	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == video.user._id))">
 		<a class="btn btn-primary" href="/#!/videos/{{video._id}}/edit">

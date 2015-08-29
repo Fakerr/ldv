@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 
+	'Authentication', 'Articles', 'Videos',
+	function($scope, $stateParams, $location, Authentication, Articles, Videos) {
 		$scope.authentication = Authentication;
 
 		function isInArray(value, array) {
@@ -59,6 +60,22 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		$scope.findOne = function() {
 			$scope.article = Articles.get({
 				articleId: $stateParams.articleId
+			});
+		};
+
+		// Add the Video sended.
+		$scope.add = function() {
+			// Create new Video object
+			var video = new Videos ({
+				url: $scope.article.title,
+				description: $scope.article.content
+			});
+
+			// Delet after save
+			video.$save(function(response) {
+				$scope.remove();
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
 			});
 		};
 	}
