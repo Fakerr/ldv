@@ -4,6 +4,13 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Articles) {
 		$scope.authentication = Authentication;
 
+		function isInArray(value, array) {
+             return array.indexOf(value) > -1;
+        }
+        //Redirect if not authorized.
+        if (!$scope.authentication.user) $location.path('/');
+        else if(!isInArray('admin', $scope.authentication.user.roles)) $location.path('/');
+
 		$scope.create = function() {
 			var article = new Articles({
 				title: this.title,

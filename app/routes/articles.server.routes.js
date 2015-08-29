@@ -9,13 +9,13 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
 	// Article Routes
 	app.route('/articles')
-		.get(articles.list)
+		.get(users.requiresLogin, users.hasAuthorization(['admin']), articles.list)
 		.post(users.requiresLogin, articles.create);
 
 	app.route('/articles/:articleId')
-		.get(articles.read)
-		.put(users.requiresLogin, articles.hasAuthorization, articles.update)
-		.delete(users.requiresLogin, articles.hasAuthorization, articles.delete);
+		.get(users.requiresLogin, users.hasAuthorization(['admin']), articles.read)
+		.put(users.requiresLogin, users.hasAuthorization(['admin']), articles.update)
+		.delete(users.requiresLogin, users.hasAuthorization(['admin']), articles.delete);
 
 	// Finish by binding the article middleware
 	app.param('articleId', articles.articleByID);
