@@ -10,6 +10,14 @@
 				by
 				<span data-ng-bind="article.user.displayName"></span>
 			</small>
+			<div class="pull-right">
+				<div data-ng-show="!article.state.localeCompare('Not added')" class="text-danger">
+			        <strong data-ng-bind="article.state"></strong>
+		        </div>
+		        <div data-ng-show="!article.state.localeCompare('Added')" class="text-success">
+			        <strong data-ng-bind="article.state"></strong>
+		        </div>
+			</div>
 			<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
 			<p class="list-group-item-text" data-ng-bind="article.content"></p>
 		</a>

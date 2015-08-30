@@ -4,6 +4,12 @@
 		<a target="_blank" data-ng-bind="article.title" data-ng-href="{{article.title}}"></a>
 	</div>
 	<div class="pull-right">
+		<div data-ng-show="!article.state.localeCompare('Not added')" class="text-danger">
+			<strong data-ng-bind="article.state"></strong>
+		</div>
+		<div data-ng-show="!article.state.localeCompare('Added')" class="text-success">
+			<strong data-ng-bind="article.state"></strong>
+		</div>
 		<a class="btn btn-primary" data-ng-click="add();">
 			<i class="glyphicon glyphicon-ok"></i>
 		</a>

@@ -71,9 +71,10 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				description: $scope.article.content
 			});
 
-			// Delet after save
+			// Redirect after save.
 			video.$save(function(response) {
-				$scope.remove();
+				$scope.article.state = 'Added';
+				$scope.update();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

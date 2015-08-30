@@ -28,6 +28,11 @@ var ArticleSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	state: {
+		type: String,
+		default: 'Not added',
+		trim: true
 	}
 });
 
