@@ -56,13 +56,17 @@ ApplicationConfiguration.registerModule('core');
 ApplicationConfiguration.registerModule('users');
 'use strict';
 
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('videos');
+'use strict';
+
 // Configuring the Articles module
 angular.module('articles').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-		Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
+		Menus.addMenuItem('top-admin', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
+		Menus.addSubMenuItem('top-admin', 'articles', 'List Articles', 'articles');
+		Menus.addMenuItem('topbar', 'Send video', 'send', '/send');
 	}
 ]);
 'use strict';
@@ -72,6 +76,10 @@ angular.module('articles').config(['$stateProvider',
 	function($stateProvider) {
 		// Articles state routing
 		$stateProvider.
+		state('send-video', {
+			url: '/send',
+			templateUrl: 'modules/articles/views/send.client.view.html'
+		}).
 		state('listArticles', {
 			url: '/articles',
 			templateUrl: 'modules/articles/views/list-articles.client.view.html'
@@ -92,9 +100,17 @@ angular.module('articles').config(['$stateProvider',
 ]);
 'use strict';
 
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 
+	'Authentication', 'Articles', 'Videos',
+	function($scope, $stateParams, $location, Authentication, Articles, Videos) {
 		$scope.authentication = Authentication;
+
+		function isInArray(value, array) {
+             return array.indexOf(value) > -1;
+        }
+        //Redirect if not authorized.
+        if (!$scope.authentication.user) $location.path('/');
+        else if(!isInArray('admin', $scope.authentication.user.roles)) $location.path('/');
 
 		$scope.create = function() {
 			var article = new Articles({
@@ -146,6 +162,47 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				articleId: $stateParams.articleId
 			});
 		};
+
+		// Add the Video sended.
+		$scope.add = function() {
+			// Create new Video object
+			var video = new Videos ({
+				url: $scope.article.title,
+				description: $scope.article.content
+			});
+
+			// Redirect after save.
+			video.$save(function(response) {
+				$scope.article.state = 'Added';
+				$scope.update();
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+	}
+]);
+'use strict';
+
+angular.module('articles').controller('SendController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
+	function($scope, $stateParams, $location, Authentication, Articles) {
+		$scope.authentication = Authentication;
+
+        //Redirect if not logged.
+        if (!$scope.authentication.user) $location.path('/');
+
+		$scope.create = function() {
+			var article = new Articles({
+				title: this.title,
+				content: this.content
+			});
+			article.$save(function(response) {
+				$scope.title = '';
+				$scope.content = '';
+				$scope.succes = 'Your video was successfully sent !';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
 	}
 ]);
 'use strict';
@@ -185,6 +242,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
+		$scope.menuAd = Menus.getMenu('top-admin');
 
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
@@ -199,11 +257,17 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'ngDialog', 'Videos',
-	function($scope, Authentication, ngDialog, Videos) {
+angular.module('core').controller('HomeController', ['$scope', '$http', 'Authentication', 'ngDialog',
+	function($scope, $http, Authentication, ngDialog) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-		$scope.videos = Videos.query();
+        //Get videos using videos API.
+        $http.get('/videos').success(function(response) {
+				// If successful we assign the response to the global video model
+				$scope.videos = response;
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
 	
 		$scope.openVideo = function(video) {
 			$scope.videoUrl = video;
@@ -383,20 +447,7 @@ angular.module('core').service('Menus', [
 
 		//Adding the topbar menu
 		this.addMenu('topbar');
-	}
-]);
-'use strict';
-
-//Articles service used for communicating with the articles REST endpoints
-angular.module('core').factory('Videos', ['$resource',
-	function($resource) {
-		return $resource('videos/:videoId', {
-			videoId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
+		this.addMenu('top-admin', false, ['admin']);
 	}
 ]);
 'use strict';
@@ -643,6 +694,129 @@ angular.module('users').factory('Authentication', [
 angular.module('users').factory('Users', ['$resource',
 	function($resource) {
 		return $resource('users', {}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+'use strict';
+
+// Configuring the Videos module
+angular.module('videos').run(['Menus',
+	function(Menus) {
+		// Set top bar admin menu items
+		Menus.addMenuItem('top-admin', 'Videos', 'videos', 'dropdown', '/articles(/create)?');
+		Menus.addSubMenuItem('top-admin', 'videos', 'List Videos', 'videos');
+		Menus.addSubMenuItem('top-admin', 'videos', 'New video', 'videos/create');
+	}
+]);
+'use strict';
+
+//Setting up route
+angular.module('videos').config(['$stateProvider',
+	function($stateProvider) {
+		// Videos state routing
+		$stateProvider.
+		state('listVideos', {
+			url: '/videos',
+			templateUrl: 'modules/videos/views/list-videos.client.view.html'
+		}).
+		state('createVideo', {
+			url: '/videos/create',
+			templateUrl: 'modules/videos/views/create-video.client.view.html'
+		}).
+		state('viewVideo', {
+			url: '/videos/:videoId',
+			templateUrl: 'modules/videos/views/view-video.client.view.html'
+		}).
+		state('editVideo', {
+			url: '/videos/:videoId/edit',
+			templateUrl: 'modules/videos/views/edit-video.client.view.html'
+		});
+	}
+]);
+'use strict';
+
+// Videos controller
+angular.module('videos').controller('VideosController', ['$scope', '$stateParams', '$location', 'Authentication', 'Videos',
+	function($scope, $stateParams, $location, Authentication, Videos) {
+		$scope.authentication = Authentication;
+
+		function isInArray(value, array) {
+             return array.indexOf(value) > -1;
+        }
+        //Redirect if not authorized.
+        if (!$scope.authentication.user) $location.path('/');
+        else if(!isInArray('admin', $scope.authentication.user.roles)) $location.path('/');
+
+		// Create new Video
+		$scope.create = function() {
+			// Create new Video object
+			var video = new Videos ({
+				url: this.url,
+				description: this.description
+			});
+
+			// Redirect after save
+			video.$save(function(response) {
+				$location.path('videos/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Remove existing Video
+		$scope.remove = function(video) {
+			if ( video ) { 
+				video.$remove();
+
+				for (var i in $scope.videos) {
+					if ($scope.videos [i] === video) {
+						$scope.videos.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.video.$remove(function() {
+					$location.path('videos');
+				});
+			}
+		};
+
+		// Update existing Video
+		$scope.update = function() {
+			var video = $scope.video;
+
+			video.$update(function() {
+				$location.path('videos/' + video._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Find a list of Videos
+		$scope.find = function() {
+			$scope.videos = Videos.query();
+		};
+
+		// Find existing Video
+		$scope.findOne = function() {
+			$scope.video = Videos.get({ 
+				videoId: $stateParams.videoId
+			});
+		};
+	}
+]);
+'use strict';
+
+//Videos service used to communicate Videos REST endpoints
+angular.module('videos').factory('Videos', ['$resource',
+	function($resource) {
+		return $resource('videos/:videoId', { videoId: '@_id'
+		}, {
 			update: {
 				method: 'PUT'
 			}
