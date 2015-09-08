@@ -281,6 +281,11 @@ angular.module('core').controller('HomeController', ['$scope', '$http', 'Authent
 			controls: 0,
 			autoplay: 0
 		};
+        //Replay video.
+		$scope.$on('youtube.player.ended', function ($event, player) {
+            // play it again
+            player.playVideo();
+        });
 	}
 ]);
 'use strict';
