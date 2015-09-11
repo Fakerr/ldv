@@ -30,5 +30,17 @@ angular.module('core').controller('HomeController', ['$scope', '$http', 'Authent
             // play it again
             player.playVideo();
         });
+         
+        //Videos quantity to be dispalyed.
+        $scope.quantity = 15;
+
+        //Show button.
+        $scope.showButton = true;
+
+        //Display function.
+        $scope.displayVideos = function() {
+        	$scope.quantity += 15;
+        	if ($scope.quantity >= $scope.videos.length)  $scope.showButton = false;
+        };
 	}
 ]);
