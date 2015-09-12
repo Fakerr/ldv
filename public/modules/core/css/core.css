@@ -140,7 +140,7 @@
     .brand-text {
         font-family: 'Helvetica Neue', sans-serif;
         font-size: 3.3rem;
-        font-weight: 600;
+        font-weight: 580;
         color: #C00000;
 
     }
@@ -148,7 +148,7 @@
     .sub-text {
         color: #000000;
         font-weight: 100;
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -161,7 +161,7 @@
     .brand-text {
         font-family: 'Helvetica Neue', sans-serif;
         font-size: 3.3rem;
-        font-weight: 600;
+        font-weight: 580;
         color: #C00000;
 
     }
@@ -169,7 +169,7 @@
     .sub-text {
         color: #000000;
         font-weight: 100;
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -182,14 +182,14 @@
     .brand-text {
         font-family: 'Helvetica Neue', sans-serif;
         font-size: 2.9rem;
-        font-weight: 600;
+        font-weight: 580;
         color: #C00000;
 
     }
 
     .sub-text {
         color: #000000;
-        font-weight: 100;
+        font-weight: 200;
         font-size: 2.0rem;
     }
 }
@@ -203,7 +203,7 @@
     .brand-text {
         font-family: 'Helvetica Neue', sans-serif;
         font-size: 2.0rem;
-        font-weight: 600;
+        font-weight: 580;
         color: #C00000;
 
     }
